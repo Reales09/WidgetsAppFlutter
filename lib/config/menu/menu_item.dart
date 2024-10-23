@@ -45,4 +45,16 @@ const appMenuItems = <MenuItem>[
     link: '/animated',
     icon: Icons.check_box_outline_blank_outlined,
   ),
+  MenuItem(
+    tittle: 'Charts',
+    subTittle: 'Graficos',
+    link: '/charts',
+    icon: Icons.graphic_eq,
+  ),
+  MenuItem(
+    tittle: 'Animaciones',
+    subTittle: 'Lottie',
+    link: '/lottie',
+    icon: Icons.animation,
+  ),
 ];

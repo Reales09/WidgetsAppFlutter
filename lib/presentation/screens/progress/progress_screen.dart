@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
 
 class ProgressScreen extends StatelessWidget {
   static const name = 'progress_screen';
@@ -23,20 +24,21 @@ class _ProgressView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
+    return Center(
       child: Column(
         children: [
-          SizedBox(height: 30),
-          Text('Circular progress indicator'),
-          SizedBox(height: 20),
-          CircularProgressIndicator(
+          const SizedBox(height: 30),
+          const Text('Circular progress indicator'),
+          const SizedBox(height: 20),
+          const CircularProgressIndicator(
             strokeWidth: 2,
             backgroundColor: Colors.black45,
           ),
-          SizedBox(height: 20),
-          Text('Circular y Linear controlado'),
-          SizedBox(height: 10),
-          _ControlerProgressIndicator(),
+          const SizedBox(height: 20),
+          const Text('Circular y Linear controlado'),
+          const SizedBox(height: 10),
+          const _ControlerProgressIndicator(),
+          const SizedBox(height: 10),
         ],
       ),
     );

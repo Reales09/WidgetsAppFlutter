@@ -1,4 +1,6 @@
 import 'package:go_router/go_router.dart';
+import 'package:widgets_app/presentation/screens/charts/ordenes_charts.dart';
+import 'package:widgets_app/presentation/screens/lottie/animation.dart';
 import 'package:widgets_app/presentation/screens/screens.dart';
 
 // GoRouter configuration
@@ -34,6 +36,16 @@ final appRouter = GoRouter(
       path: '/animated',
       name: AnimatedScreen.name,
       builder: (context, state) => const AnimatedScreen(),
+    ),
+    GoRoute(
+      path: '/charts',
+      name: OrdenesWidget.name,
+      builder: (context, state) => OrdenesWidget(),
+    ),
+    GoRoute(
+      path: '/lottie',
+      name: AnimatedWidget.name,
+      builder: (context, state) => AnimatedWidget(),
     ),
   ],
 );
