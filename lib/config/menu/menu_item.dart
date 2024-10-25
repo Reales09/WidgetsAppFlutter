@@ -57,4 +57,10 @@ const appMenuItems = <MenuItem>[
     link: '/lottie',
     icon: Icons.animation,
   ),
+  MenuItem(
+    tittle: 'Ui Controls + Tiles',
+    subTittle: 'Una serie de controles de Flutter',
+    link: '/ui-controls',
+    icon: Icons.car_rental_outlined,
+  ),
 ];
