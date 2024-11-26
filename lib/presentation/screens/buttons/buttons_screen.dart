@@ -1,7 +1,15 @@
+import 'dart:io';
+
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:widgets_app/presentation/file_downloader.dart';
+import 'package:widgets_app/presentation/screens/descargaArchivos.dart';
 import 'package:widgets_app/presentation/screens/home/home_screen.dart';
+import 'package:path/path.dart' as path;
+import 'package:path_provider/path_provider.dart';
+import 'package:open_filex/open_filex.dart';
 
 class ButtonsScreens extends StatelessWidget {
   static const String name = 'buttons_screen';
@@ -48,6 +56,61 @@ class _ButtonsView extends StatelessWidget {
               icon: const Icon(Icons.abc_sharp),
               label: const Text('Filled Icon')),
           OutlinedButton(onPressed: () {}, child: const Text('Outlined')),
+          OutlinedButton(
+              onPressed: () async {
+                PermissionStatus status = await Permission.photos.request();
+                if (status.isGranted) {
+                  // El permiso fue concedido, procede con la descarga
+                  try {
+                    final url =
+                        // 'https://www.unipiloto.edu.co/descargas/archivo_administracion_de_empresas/guia_ensayos.pdf';
+                        'https://ojs.docentes20.com/Plantilla-Ensayos-Espa%C3%B1ol.docx';
+                    // 'https://definicion.com/wp-content/uploads/2022/09/imagen.jpg';
+
+                    final bearerToken = 'tu_token_bearer_aquí'; // Opcional
+
+                    // Obtiene el directorio donde puedes guardar archivos
+                    Directory appDocDir =
+                        await getApplicationDocumentsDirectory();
+                    String savePath = path.join(appDocDir.path, 'archivo');
+
+                    final downloader = FileDownloader();
+
+                    print('Se hizo clic');
+
+                    // Espera a que la descarga termine antes de continuar
+                    await downloader.downloadFile(
+                      url,
+                      savePath,
+                      onReceiveProgress: (int received, int total) {
+                        if (total != -1) {
+                          print(
+                              'Progreso: ${(received / total * 100).toStringAsFixed(0)}%');
+                        }
+                      },
+                    );
+
+                    // Verifica si el archivo existe antes de intentar abrirlo
+                    if (await File(savePath).exists()) {
+                      // Abre el archivo descargado
+                      final result = await OpenFilex.open(savePath);
+                      print('Resultado de abrir el archivo: ${result.message}');
+                    } else {
+                      print(
+                          'El archivo no existe en la ruta especificada: $savePath');
+                    }
+                  } catch (e) {
+                    print('Ocurrió un error: $e');
+                  }
+                } else if (status.isDenied) {
+                  // El usuario denegó el permiso
+                  print('Permiso denegado');
+                } else if (status.isPermanentlyDenied) {
+                  // El permiso fue denegado permanentemente, abre la configuración de la app
+                  openAppSettings();
+                }
+              },
+              child: const Text('Descargar')),
           OutlinedButton.icon(
             onPressed: () {},
             icon: const Icon(Icons.add_business),
